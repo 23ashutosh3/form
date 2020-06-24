@@ -1,9 +1,9 @@
 const express = require("express");
-// const path = require("path");
+ const path = require("path");
 //give host to run
 const port = 8000;
 
-const path = require("path");
+// const path = require("path");
 
 //database
 
@@ -34,8 +34,39 @@ app.get("/", function (req, res) {
   });
 });
 
+var multer=require('multer');
+var storage=multer.diskStorage(
+  {
+    destination:function(req,file,cb)
+    {
+      cb(null,'./uploads');
 
-app.post("/create-form", function (req, res) {
+    },
+   filename:function(req,file,cb)
+   {
+     cb(null,Date.now()+file.originalname);
+   },
+
+
+  }
+);
+
+var imageFilter = function(req,file,cb)
+{
+  if(!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i))
+  {
+    return cb(new Error('Only image files are allowed'),false);
+  }
+  cb(null,true);
+
+
+};
+
+var upload=multer({
+  storage,fileFilter:imageFilter
+})
+
+app.post("/create-form",upload.single('avatar'), function (req, res) {
   console.log(req.body);
 
   Form.create(
@@ -46,7 +77,7 @@ app.post("/create-form", function (req, res) {
 
       Phone: req.body.phone,
 
-                
+      avatar:req.file.filename
 
 
 
@@ -69,7 +100,7 @@ app.post("/create-form", function (req, res) {
 
 
 
-//app.use('/', require('./routes'));
+// app.use('/', require('./routes'));
 
 app.listen(port, function (err) {
   if (err) {

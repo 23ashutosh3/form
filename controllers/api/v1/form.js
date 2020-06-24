@@ -1,6 +1,6 @@
 const Form = require("../../../models/forms");
 
-module.exports.form = async function (req, res) {
+module.exports.fillForm = async function (req, res) {
   try {
     if (!req.body) {
       return res.json(400, {
@@ -21,7 +21,6 @@ module.exports.form = async function (req, res) {
 
       Phone: req.body.phone,
 
-      avatar: Form.avatarPath +'/'+req.file.filename,
     });
 
    

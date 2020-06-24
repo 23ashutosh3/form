@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const multer =require('multer');
-const path = require('path');
-const AVATAR_PATH=path.join('./uploads/users/avatars')
+// const multer =require('multer');
+// const path = require('path');
+// const AVATAR_PATH=path.join('./uploads/users/avatars')
 
 const formSchema = new mongoose.Schema({
   Firstname: {
@@ -28,20 +28,20 @@ const formSchema = new mongoose.Schema({
   }
 });
 
-let storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "..", AVATAR_PATH));
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + "-" + Date.now());
-  },
-});
+// let storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, path.join(__dirname, "..", AVATAR_PATH));
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.fieldname + "-" + Date.now());
+//   },
+// });
 
 
-formSchema.statics.uploadedAvatar = multer({ storage: storage }).single(
-  "avatar"
-);
-formSchema.statics.avatarPath = AVATAR_PATH;
+// formSchema.statics.uploadedAvatar = multer({ storage: storage }).single(
+//   "avatar"
+// );
+// formSchema.statics.avatarPath = AVATAR_PATH;
 
 
 
